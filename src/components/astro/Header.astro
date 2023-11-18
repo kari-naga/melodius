@@ -1,0 +1,16 @@
+---
+import ThemeSelector from '@/components/astro/ThemeSelector.astro'
+import IconLogo from '~icons/streamline/ai-generate-music-spark'
+---
+
+<header>
+  <nav class="p-4 flex items-center gap-6 text-2xl w-screen">
+    <a href="/" class="flex items-center gap-2 text-3xl">
+      <IconLogo class="text-cyan-400" />
+      <h1 class="font-semibold pb-1">Melodius</h1>
+    </a>
+    <a href="/explore">Explore</a>
+    <a href="/create">Create</a>
+    <ThemeSelector class="ml-auto mr-2" />
+  </nav>
+</header>
