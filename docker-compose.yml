@@ -10,3 +10,5 @@ services:
     hostname: melodius
     ports:
       - 4321:4321
+    volumes:
+      - ./files:/files
