@@ -26,7 +26,8 @@ const FileUpload = () => {
         setFile(false);
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('sourceCount', '5')
+        console.log(file.name)
+        formData.append('sourceCount', '2')
         fetch('/api/split', {
             method: 'POST',
             body: formData

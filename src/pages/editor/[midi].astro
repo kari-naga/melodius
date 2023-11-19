@@ -1,49 +1,18 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import IndexHeader from "@/components/astro/IndexHeader.astro";
-import IconLogo from "~icons/streamline/ai-generate-music-spark";
-import ThemeSelector from "@/components/astro/ThemeSelector.astro";
-import Card from "@/components/astro/Card.astro";
-import type { ISourceOptions } from "tsparticles-engine";
-import Particles from "astro-particles";
-import MusicNote from "../assets/images/music-note.svg";
 import "../../styles/MidiPlayer.css";
+import MidiPlayers from "../../components/react/MidiRetrieval";
 
 interface Props {
   title?: string;
 }
 
 const { midi } = Astro.params;
-export async function load() {
-  const formData = new FormData();
-  formData.append("filename", Astro.params?.midi as string);
-  const response = await fetch("/api/load-midi", {
-    method: "GET",
-    body: formData,
-  }).then((response) => {
-    console.log(response);
-  });
-
-  return {
-    response,
-  };
-}
-load();
+console.log(midi);
 ---
 
 <MainLayout>
   <IndexHeader slot="header" />
-  <section id="section3">
-    <h2>{`${midi} player and visualizer style`}</h2>
-    <midi-player
-      src="../../files/processed_midi/short-sample/accompaniment_basic_pitch.mid"
-      sound-font="https://storage.googleapis.com/magentadata/js/soundfonts/sgm_plus"
-      visualizer="#section3 midi-visualizer"
-    >
-    </midi-player>
-    <midi-visualizer
-      src="../../files/processed_midi/short-sample/accompaniment_basic_pitch.mid"
-    >
-    </midi-visualizer>
-  </section>
+  <MidiPlayers midi_name={midi} client:load />
 </MainLayout>
