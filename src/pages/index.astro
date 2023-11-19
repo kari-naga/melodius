@@ -58,6 +58,12 @@ interface Props {
     console.log("particlesLoaded callback");
   };
 </script>
+import MainLayout from '@/layouts/MainLayout.astro'
+import IndexHeader from '@/components/astro/IndexHeader.astro'
+import ThemeSelector from '@/components/astro/ThemeSelector.astro'
+import IconLogo from '~icons/streamline/ai-generate-music-spark'
+import Card from '@/components/astro/Card.astro'
+---
 
 <MainLayout>
   <IndexHeader slot="header" />
@@ -68,12 +74,13 @@ interface Props {
     <IconLogo class="text-cyan-400" />
     <h1 class="font-semibold">Melodius</h1>
   </div>
-  <h2 class="mt-4 text-2xl font-light max-w-prose">
-    The Next Generation Music Creation App
-  </h2>
-  <button
-    class="transition-colors mt-4 rounded-lg py-3 px-4 w-max text-md font-semibold bg-sky-600 hover:bg-sky-700 active:bg-sky-800"
-    >Get Started</button
-  >
+  <h2 class="mt-4 text-2xl font-light max-w-prose">The Next Generation Music Creation App</h2>
+  <button class="transition-colors mt-4 rounded-full py-32 px-64 text-8xl font-semibold bg-sky-600 hover:bg-sky-700 active:bg-sky-800">Get Started</button>
   <ThemeSelector slot="footer" class="ml-auto" />
+  <div class="flex gap-6">
+    <Card header="Step 1" body="Upload your music." description="Accepted file formats include .mp3, .mp4, and .wav."/>
+    <Card header="Step 2" body="Edit individual tracks." description="We separate the different instruments out so you can finetune the final result."/>
+    <Card header="Step 3" body="Enjoy your sheet music!" description="Download and practice your creation."/>  
+  </div>
+
 </MainLayout>
