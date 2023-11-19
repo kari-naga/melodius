@@ -14,9 +14,9 @@
                 <h1 v-show="toggle">
                     <!-- <span v-html="IconX" class="white" /> -->
                     <div class="flex flex-col gap-4 font-light">
-                        <a href="" class="mt-2 hover:text-cyan-400 transition-colors">Home</a>
-                        <a href="" class="hover:text-cyan-400 transition-colors">Create</a>
-                        <a href="" class="hover:text-cyan-400 transition-colors">About</a>
+                        <a href="/" class="mt-2 hover:text-cyan-400 transition-colors">Home</a>
+                        <a href="/upload" class="hover:text-cyan-400 transition-colors">Create</a>
+                        <a href="/about" class="hover:text-cyan-400 transition-colors">About</a>
                     </div>
                 </h1>
             </h1>

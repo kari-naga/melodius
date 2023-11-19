@@ -1,0 +1,9 @@
+---
+const { name, photo, bio } = Astro.props
+---
+
+<div class="flex flex-wrap flex-col justify-center items-center flex-1 gap-4 ">
+  <img src={photo} alt="profile picture" class="rounded-3xl" width="300" height="300">
+  <h2 class="text-2xl font-light max-w-prose text-center">{name}</h2>
+  <h2 class="text-lg font-light max-w-prose text-center ">{bio}</h2>
+</div>

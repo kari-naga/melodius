@@ -3,7 +3,7 @@ import MainLayout from '@/layouts/MainLayout.astro'
 import IndexHeader from '@/components/astro/IndexHeader.astro'
 import IconLogo from '~icons/streamline/ai-generate-music-spark'
 import ThemeSelector from '@/components/astro/ThemeSelector.astro'
-import Card from '@/components/astro/Card.astro'
+import Profile from '@/components/astro/Profile.astro'
 import type { ISourceOptions } from 'tsparticles-engine'
 import Particles from 'astro-particles'
 import MusicNote from "../assets/images/music-note.svg";
@@ -80,30 +80,15 @@ interface Props {
   <Particles id="tsparticles" options={options} init="particlesInit" />
 
   <div class="flex items-center gap-4 text-5xl">
-    <span set:html={IconLogo} class="text-cyan-400" />
-    <h1 class="font-semibold">Melodius</h1>
+    <h1 class="font-semibold">About</h1>
   </div>
-  <h2 class="mt-4 text-2xl font-light max-w-prose">The Next Generation Audio to Sheet Music Creation App</h2>
-  <a href="/upload"
-    class="button shadow-xl shadow-cyan-900 transition-all ease-in-out duration-500 bg-[length:300%_100%] m-4 text-cyan-100 rounded-full py-4 px-8 text-2xl font-semibold bg-gradient-to-l drop-shadow-lg from-cyan-700 via-sky-400 to-cyan-700 hover:bg-[right_300%] active:shadow-[inset_0_8px_16px_0_rgba(0,255,255,0.8)] hover:shadow-cyan-900 active:from-sky-600 active:to-cyan-800"
-    >Get Started</a
-  >
-  <!-- shadow-[0px_24px_24px_24px_rgba(0,0,0,0.3)] -->
-  <ThemeSelector slot="footer" class="ml-auto" />
-  <div class="flex gap-6">
-    <Card header="Step 1" body="Upload your music." description="Accepted file formats include .mp3 and .wav." />
-    <Card
-      header="Step 2"
-      body="Edit individual tracks."
-      description="We separate the different instruments out so you can finetune the result."
-    />
-    <Card header="Step 3" body="Enjoy your sheet music!" description="Download and practice your creation." />
+  <h2 class="m-4 text-2xl font-light max-w-prose">The Hackers Behind Melodius!</h2>
+  <div class="flex gap-6 justify-evenly">
+    <Profile name="Kari Naga" photo="/src/assets/images/kari.jpg" bio="Hello, my name is Kari and I am a Senior in Computer Engineering. I worked on the setup and integration???" />
+    <Profile name="Jai Narayanan" photo="/src/assets/images/sickpfp.jpg" bio="Hi, I am Jai, a Junior in Computer Science. I worked on the UI and functionality for the upload page!" />
+    <Profile name="Emily Wu" photo="/src/assets/images/emily.jpg" bio="Hi I'm Emily, a Junior in Robotics with a Minor in CS. I worked on the UI for the main page and the about page!" />
   </div>
+
+
 </MainLayout>
 
-<style>
-  .btn-hover {
-    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
-    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
-  }
-</style>
