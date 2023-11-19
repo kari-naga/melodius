@@ -1,14 +1,3 @@
-version: '3'
-
-name: melodius
-
-services:
-  melodius-backend:
-    container_name: melodius-backend
-    image: melodius-backend
-    build: ./
-    hostname: melodius
-    ports:
-      - 4321:4321
+re
     volumes:
       - ./files:/files

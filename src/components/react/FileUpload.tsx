@@ -3,6 +3,7 @@ import UploadFile from "../../assets/images/upload-file.svg";
 import MusicFile from "../../assets/images/music-file.svg";
 import CloseCircle from "../../assets/images/close-circle.svg";
 import Loader from "./Loader";
+import { navigate } from "astro/transitions/router";
 
 const FileUpload = () => {
     const [dragActive, setDragActive] = useState<boolean>(false);
@@ -22,17 +23,19 @@ const FileUpload = () => {
         }
 
         setLoading(true);
+        setFile(false);
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('sourceCount', '2')
+        formData.append('sourceCount', '5')
         fetch('/api/split', {
             method: 'POST',
             body: formData
         })
-            // .then(response => response.json())
+            // .then(response => re)
             .then(data => {
-                console.log(data.json())
+                // console.log(data.json())
                 setLoading(false);
+                navigate(`/editor/${file.name}`)
                 // alert("success")
             })
             .catch(error => {

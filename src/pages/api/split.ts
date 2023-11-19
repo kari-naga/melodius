@@ -49,9 +49,12 @@ export async function POST({ request }: APIContext) {
         if(!existsSync('/files/processed_midi')){
           mkdirSync('/files/processed_midi')
         }
+        if(!existsSync(`/files/processed_midi/${fileName}`)){
+          mkdirSync(`/files/processed_midi/${fileName}`)
+        }
         for (const split_file of split_files){
           console.log(`=========Processing ${split_file}=========`);
-          await exec_promise(`/root/miniconda3/bin/basic-pitch /files/processed_midi ${spleeter_output_dir}/${split_file}`)
+          await exec_promise(`/root/miniconda3/bin/basic-pitch /files/processed_midi/${fileName} ${spleeter_output_dir}/${split_file}`)
           console.log(`Finished converting ${split_file} to MIDI`);
         }
       } catch (err) {
@@ -68,7 +71,7 @@ export async function POST({ request }: APIContext) {
     }
   }
 
-  return new Response(wroteFile ? JSON.stringify('Successfully wrote file') : JSON.stringify('Failed to write file'), {
+  return new Response(wroteFile ? JSON.stringify("") : JSON.stringify('Failed to write file'), {
     status: wroteFile ? 200 : 500,
     headers: {
       'Content-Type': 'application/json',
