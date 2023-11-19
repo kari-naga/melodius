@@ -3,18 +3,89 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import IndexHeader from "@/components/astro/IndexHeader.astro";
 import ThemeSelector from "@/components/astro/ThemeSelector.astro";
 import FileUpload from "../components/react/FileUpload";
+import type { ISourceOptions } from 'tsparticles-engine'
+import Particles from 'astro-particles'
+import MusicNote from "../assets/images/music-note.svg";
+
+const options: ISourceOptions = {
+  autoPlay: true,
+  fullScreen: {
+    zIndex: -1,
+  },
+  particles: {
+    shape: {
+      type: 'images',
+      options: {
+        images: {
+          src: MusicNote.src,
+          width: 500,
+          height: 634,
+        },
+      },
+    },
+    opacity: {
+      value: 0.9, // Set the initial opacity to a lower value
+      anim: {
+        enable: true,
+        opacity_min: 0, // Set the minimum opacity during the animation
+        speed: 1, // Set the speed of the fade-in animation
+        sync: false,
+      },
+    },
+    size: {
+      value: 14,
+    },
+    number: {
+      value: 30,
+      density: {
+        enable: true,
+        value_area: 800,
+      },
+    },
+    move: {
+      enable: true,
+      speed: 1,
+    },
+  },
+}
+interface Props {
+  title?: string
+}
 ---
+
+<script>
+  import { type Container, type Engine, tsParticles } from "tsparticles-engine";
+  // @ts-ignore
+  import { loadFull } from "tsparticles";
+
+  // the function name is the parameter passed to the init attribute
+  // required
+  // @ts-ignore
+  window.particlesInit = async function (engine: Engine) {
+    await loadFull(engine)
+  }
+
+  // the function name is the parameter passed to the loaded attribute
+  // optional
+  // @ts-ignore
+  window.particlesLoaded = function (container: Container) {
+    console.log('particlesLoaded callback')
+  }
+</script>
 
 <MainLayout>
   <IndexHeader slot="header" />
-  <div class="mt-[125px]"></div>
-  <div class="flex items-center w-full px-20">
-    <div
-      class="w-full flex flex-col items-center justify-center mx-auto lg:w-[60%]"
-    >
-      <FileUpload client:load />
+
+  <Particles id="tsparticles" options={options} init="particlesInit" />
+
+  <!-- <div class="mt-[125px]"></div> -->
+    <div class="flex items-center w-full px-20">
+      <div
+        class="w-full flex flex-col items-center justify-center mx-auto lg:w-[60%] text-white"
+      >
+        <FileUpload client:load />
+      </div>
     </div>
-  </div>
 
   <!--         style="background: linear-gradient(to bottom,rgba(56, 189, 248, 0) 0%,rgba(8, 145, 178,.06) 100%);"
  -->
@@ -22,5 +93,5 @@ import FileUpload from "../components/react/FileUpload";
   <!-- linear-gradient(180deg,rgba(60,8,126,0) 0%,rgba(60,8,126,.32) 100%),rgba(113,47,255,.12) -->
   <!-- linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,.06) 100%) -->
   <!-- linear-gradient(to bottom,rgba(56, 189, 248, 0) 0%,rgba(8, 145, 178,.06) 100%) -->
-  <ThemeSelector slot="footer" class="ml-auto" />
+  <ThemeSelector slot="footer" class="ml-auto " />
 </MainLayout>
