@@ -4,9 +4,13 @@
     "types": [
       "unplugin-icons/types/astro"
     ],
-    "baseUrl": ".",
+    "baseUrl": "/home/atom/um/mhacks",
     "paths": {
-      "@/*": ["src/*"],
-    }
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   }
 }

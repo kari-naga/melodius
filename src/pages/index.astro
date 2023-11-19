@@ -1,7 +1,15 @@
 ---
-import Layout from '@/layouts/Layout.astro'
+import MainLayout from '@/layouts/MainLayout.astro'
+import IndexHeader from '@/components/astro/IndexHeader.astro'
+import IconLogo from '~icons/streamline/ai-generate-music-spark'
+import ThemeSelector from '@/components/astro/ThemeSelector.astro'
 ---
 
-<Layout>
-  <h1 class="text-5xl font-semibold">Melodius</h1>
-</Layout>
+<MainLayout>
+  <IndexHeader slot="header" />
+  <div class="flex items-center gap-4 text-5xl">
+    <IconLogo class="text-cyan-400" />
+    <h1 class="font-medium">Melodius</h1>
+  </div>
+  <ThemeSelector slot="footer" class="ml-auto" />
+</MainLayout>
