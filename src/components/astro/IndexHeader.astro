@@ -1,9 +1,9 @@
 ---
+import Menu from '@/components/astro/Menu.vue'
 ---
 
 <header class="fixed">
-  <nav class="p-6 flex justify-between items-center gap-6 text-2xl w-screen">
-    <a href="/explore">Explore</a>
-    <a href="/create">Create</a>
+  <nav class="p-6 flex justify-start items-center gap-6 text-2xl w-screen">
+    <Menu client:load />
   </nav>
 </header>

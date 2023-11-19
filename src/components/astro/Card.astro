@@ -4,11 +4,13 @@ const { header, body, description } = Astro.props
 
 <div class="flip-card flex flex-col justify-center items-center flex-1">
   <div class="flip-card-inner">
-    <div class="flip-card-front bg-slate-700 flex flex-col justify-center items-center">
+    <div class="flip-card-front bg-gradient-to-br from-gray-600 to-slate-700 flex flex-col justify-center items-center">
+      <!-- bg-gradient-to-br from-gray-600 to-slate-700 -->
       <h2 class="text-2xl font-light max-w-prose text-center">{header}</h2>
       <h2 class="text-1xl font-light max-w-prose text-center">{body}</h2>
     </div>
-    <div class="flip-card-back bg-cyan-700 flex flex-col justify-center items-center">
+    <div class="flip-card-back bg-gradient-to-br from-sky-700 to-cyan-800 flex flex-col justify-center items-center"> 
+      <!-- bg-gradient-to-br from-sky-700 to-cyan-800  -->
       <h2 class="text-1xl font-light max-w-prose text-center">{description}</h2>
     </div>
   </div>
@@ -18,8 +20,8 @@ const { header, body, description } = Astro.props
   /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
   .flip-card {
     background-color: transparent;
-    width: 300px;
-    height: 200px;
+    width: 250px;
+    height: 150px;
     /* border: 1px solid #f1f1f1; */
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
     
@@ -33,7 +35,7 @@ const { header, body, description } = Astro.props
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
-    border-radius: 100rem;
+    /* border-radius: 100rem; */
   }
 
   /* Do an horizontal flip when you move the mouse over the flip box container */
@@ -49,18 +51,19 @@ const { header, body, description } = Astro.props
     height: 100%;
     padding: 2rem;
     -webkit-backface-visibility: hidden; /* Safari */
+    /* border: 1px solid #f1f1f1; */
     backface-visibility: hidden;
   }
 
   /* Style the front side (fallback if image is missing) */
   .flip-card-front {
-    border-radius: 3rem;
+    border-radius: 2rem;
     color: white;
   }
 
   /* Style the back side */
   .flip-card-back {
-    border-radius: 3rem;
+    border-radius: 2rem;
     color: white;
     transform: rotateY(180deg);
   }
