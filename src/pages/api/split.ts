@@ -5,10 +5,12 @@ import { promisify } from 'node:util'
 
 export async function POST({ request }: APIContext) {
   const formData = await request.formData()
-
+  console.log(formData.get(formData))
   let wroteFile = false
-
-  const file = formData.get('file')
+  const file = formData.get('file');
+  const sourceCount = formData.get('sourceCount');
+  const hasVocals = formData.get('vocals');
+  console.log(formData)
   if (file instanceof File) {
     const fileData = {
       webkitRelativePath: file.webkitRelativePath,
@@ -23,13 +25,25 @@ export async function POST({ request }: APIContext) {
     }
     const fileName = `/files/${fileData.name}`
     try {
-      const fileHandle = await open(fileName, 'w')
-      await fileHandle.writeFile(fileData.buffer.value)
+      const fileHandle = await open(fileName, 'w');
+      await fileHandle.writeFile(fileData.buffer.value);
       fileHandle.close()
+
+      // split file into sources using spleeter 
       const exec_promise = promisify(exec)
-      const { stdout } = await exec_promise(`/root/miniconda3/bin/basic-pitch /files ${fileName}`)
-      console.log(stdout)
-      wroteFile = true
+      const spleet_command = `/root/miniconda3/bin/spleeter separate -p ` +
+        `spleeter:${sourceCount}stems -o /files/split ${hasVocals ? '' : '-c'} ${fileName}`;
+      const { stdout } = await exec_promise(spleet_command);
+      console.log(stdout);
+      wroteFile = true;
+
+      // convert split mp3 into midis
+
+      // fileHandle.close()
+      // const exec_promise = promisify(exec)
+      // const { stdout } = await exec_promise(`/root/miniconda3/bin/basic-pitch /files ${fileName}`)
+      // console.log(stdout)
+      // wroteFile = true
     } catch (e) {
       console.error(e)
     }

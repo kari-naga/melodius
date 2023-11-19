@@ -4,7 +4,7 @@
     "types": [
       "unplugin-icons/types/astro"
     ],
-    "baseUrl": "/home/atom/um/mhacks",
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "src/*"

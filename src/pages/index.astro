@@ -1,17 +1,79 @@
 ---
-import MainLayout from '@/layouts/MainLayout.astro'
-import IndexHeader from '@/components/astro/IndexHeader.astro'
-import IconLogo from '~icons/streamline/ai-generate-music-spark'
-import ThemeSelector from '@/components/astro/ThemeSelector.astro'
+import MainLayout from "@/layouts/MainLayout.astro";
+import IndexHeader from "@/components/astro/IndexHeader.astro";
+import IconLogo from "~icons/streamline/ai-generate-music-spark";
+import ThemeSelector from "@/components/astro/ThemeSelector.astro";
+import type { ISourceOptions } from "tsparticles-engine";
+import Particles from "astro-particles";
+const options: ISourceOptions = {
+  autoPlay: true,
+  fullScreen: {
+    zIndex: -1,
+  },
+  particles: {
+    shape: {
+      type: "images",
+      options: {
+        images: {
+          src: "./src/assets/images/musicnote.png",
+          width: 500,
+          height: 634,
+        },
+      },
+    },
+    size: {
+      value: 14,
+    },
+    number: {
+      value: 30,
+      density: {
+        enable: true,
+        value_area: 800,
+      },
+    },
+    move: {
+      enable: true,
+      speed: 1,
+    },
+  },
+};
+interface Props {
+  title?: string;
+}
 ---
+
+<script>
+  import { type Container, type Engine, tsParticles } from "tsparticles-engine";
+  import { loadFull } from "tsparticles";
+
+  // the function name is the parameter passed to the init attribute
+  // required
+  window.particlesInit = async function (engine: Engine) {
+    await loadFull(engine);
+  };
+
+  // the function name is the parameter passed to the loaded attribute
+  // optional
+  window.particlesLoaded = function (container: Container) {
+    console.log("particlesLoaded callback");
+  };
+</script>
 
 <MainLayout>
   <IndexHeader slot="header" />
+
+  <Particles id="tsparticles" options={options} init="particlesInit" />
+
   <div class="flex items-center gap-4 text-5xl mt-16">
     <IconLogo class="text-cyan-400" />
     <h1 class="font-semibold">Melodius</h1>
   </div>
-  <h2 class="mt-4 text-2xl font-light max-w-prose">The Next Generation Music Creation App</h2>
-  <button class="transition-colors mt-4 rounded-full py-32 px-64 text-8xl font-semibold bg-sky-600 hover:bg-sky-700 active:bg-sky-800">Get Started</button>
+  <h2 class="mt-4 text-2xl font-light max-w-prose">
+    The Next Generation Music Creation App
+  </h2>
+  <button
+    class="transition-colors mt-4 rounded-lg py-3 px-4 w-max text-md font-semibold bg-sky-600 hover:bg-sky-700 active:bg-sky-800"
+    >Get Started</button
+  >
   <ThemeSelector slot="footer" class="ml-auto" />
 </MainLayout>
