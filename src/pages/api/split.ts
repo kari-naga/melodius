@@ -1,5 +1,6 @@
 import type { APIContext } from 'astro'
-import { open } from 'node:fs/promises'
+import { open, readdir } from 'node:fs/promises'
+import { existsSync, mkdirSync, rmSync } from 'node:fs'
 import { exec } from 'node:child_process'
 import { promisify } from 'node:util'
 
@@ -9,7 +10,6 @@ export async function POST({ request }: APIContext) {
   let wroteFile = false
   const file = formData.get('file');
   const sourceCount = formData.get('sourceCount');
-  const hasVocals = formData.get('vocals');
   if (file instanceof File) {
     const fileData = {
       webkitRelativePath: file.webkitRelativePath,
@@ -22,9 +22,16 @@ export async function POST({ request }: APIContext) {
         value: new Uint8Array(await file.arrayBuffer()),
       },
     }
-    const fileName = `/files_unmounted/${fileData.name}`
+    const fileName = fileData.name.split('.')[0];
+    if(!existsSync('/files')){
+      mkdirSync('/files')
+    }
+    if(!existsSync('/files/raw')){
+      mkdirSync('/files/raw')
+    }
+    const filePath = `/files/raw/${fileData.name}`
     try {
-      const fileHandle = await open(fileName, 'w');
+      const fileHandle = await open(filePath, 'w');
       await fileHandle.writeFile(fileData.buffer.value);
 
       fileHandle.close()
@@ -32,14 +39,26 @@ export async function POST({ request }: APIContext) {
       // split file into sources using spleeter 
       const exec_promise = promisify(exec)
       const spleet_command = `/root/miniconda3/bin/spleeter separate -p ` +
-        `spleeter:${sourceCount}stems -o /files/split ${hasVocals ? '' : '-c'} ${fileName}`;
+        `spleeter:${sourceCount}stems -o /files/split ${filePath}`;
       const { stdout } = await exec_promise(spleet_command);
-      console.log(stdout);
       wroteFile = true;
-
+      const spleeter_output_dir = `/files/split/${fileName}`;
+      try {
+        const split_files = await readdir(spleeter_output_dir);
+        const exec_promise = promisify(exec)
+        if(!existsSync('/files/processed_midi')){
+          mkdirSync('/files/processed_midi')
+        }
+        for (const split_file of split_files){
+          console.log(`=========Processing ${split_file}=========`);
+          await exec_promise(`/root/miniconda3/bin/basic-pitch /files/processed_midi ${spleeter_output_dir}/${split_file}`)
+          console.log(`Finished converting ${split_file} to MIDI`);
+        }
+      } catch (err) {
+        console.error(err);
+      }
       // convert split mp3 into midis
 
-      // fileHandle.close()
       // const exec_promise = promisify(exec)
       // const { stdout } = await exec_promise(`/root/miniconda3/bin/basic-pitch /files ${fileName}`)
       // console.log(stdout)
@@ -49,7 +68,7 @@ export async function POST({ request }: APIContext) {
     }
   }
 
-  return new Response(wroteFile ? 'Successfully wrote file' : 'Failed to write file', {
+  return new Response(wroteFile ? JSON.stringify('Successfully wrote file') : JSON.stringify('Failed to write file'), {
     status: wroteFile ? 200 : 500,
     headers: {
       'Content-Type': 'application/json',
