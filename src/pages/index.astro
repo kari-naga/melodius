@@ -5,6 +5,8 @@ import IconLogo from "~icons/streamline/ai-generate-music-spark";
 import ThemeSelector from "@/components/astro/ThemeSelector.astro";
 import type { ISourceOptions } from "tsparticles-engine";
 import Particles from "astro-particles";
+import MusicNote from "../assets/images/music-note.svg";
+
 const options: ISourceOptions = {
   autoPlay: true,
   fullScreen: {
@@ -15,10 +17,19 @@ const options: ISourceOptions = {
       type: "images",
       options: {
         images: {
-          src: "./src/assets/images/musicnote.png",
+          src: MusicNote.src,
           width: 500,
           height: 634,
         },
+      },
+    },
+    opacity: {
+      value: 0.9, // Set the initial opacity to a lower value
+      anim: {
+        enable: true,
+        opacity_min: 0, // Set the minimum opacity during the animation
+        speed: 1, // Set the speed of the fade-in animation
+        sync: false,
       },
     },
     size: {
@@ -44,16 +55,19 @@ interface Props {
 
 <script>
   import { type Container, type Engine, tsParticles } from "tsparticles-engine";
+  // @ts-ignore
   import { loadFull } from "tsparticles";
 
   // the function name is the parameter passed to the init attribute
   // required
+  // @ts-ignore
   window.particlesInit = async function (engine: Engine) {
     await loadFull(engine);
   };
 
   // the function name is the parameter passed to the loaded attribute
   // optional
+  // @ts-ignore
   window.particlesLoaded = function (container: Container) {
     console.log("particlesLoaded callback");
   };

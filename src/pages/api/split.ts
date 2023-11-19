@@ -5,12 +5,11 @@ import { promisify } from 'node:util'
 
 export async function POST({ request }: APIContext) {
   const formData = await request.formData()
-  console.log(formData.get(formData))
+  console.log(formData)
   let wroteFile = false
   const file = formData.get('file');
   const sourceCount = formData.get('sourceCount');
   const hasVocals = formData.get('vocals');
-  console.log(formData)
   if (file instanceof File) {
     const fileData = {
       webkitRelativePath: file.webkitRelativePath,
@@ -23,10 +22,11 @@ export async function POST({ request }: APIContext) {
         value: new Uint8Array(await file.arrayBuffer()),
       },
     }
-    const fileName = `/files/${fileData.name}`
+    const fileName = `/files_unmounted/${fileData.name}`
     try {
       const fileHandle = await open(fileName, 'w');
       await fileHandle.writeFile(fileData.buffer.value);
+
       fileHandle.close()
 
       // split file into sources using spleeter 
